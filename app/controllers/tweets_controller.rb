@@ -9,26 +9,52 @@ class TweetsController < ApplicationController
     if request.xhr?
       respond_to do |format|
         format.html do
-            if @tweet.save
-              redirect_to tweets_path
-            else
-              render :index
-            end
-        end
+          if @tweet.save
+            redirect_to tweets_path
+          else
+            render :index
+          end
         format.json do
           if @tweet.save
             render json: @tweet
+
           end
         end
       end
     end
     else
-        @tweet = Tweet.new(tweet_params)
-        if @tweet.save
-          redirect_to tweets_path
-        else
-          render :index
-    end
+      @tweet = Tweet.new(tweet_params)
+      if @tweet.save
+        redirect_to tweets_path
+      else
+        @tweets = Tweet.all.order(created_at: :desc)
+        render :index
+      end
+  end
+    # @tweet = Tweet.new(tweet_params)
+    # if request.xhr?
+    #   respond_to do |format|
+    #     format.html do
+    #         if @tweet.save
+    #           redirect_to tweets_path
+    #         else
+    #           render :index
+    #         end
+    #     end
+    #     format.json do
+    #       if @tweet.save
+    #         render json: @tweet
+    #       end
+    #     end
+    #   end
+    # else
+    #     @tweet = Tweet.new(tweet_params)
+    #     if @tweet.save
+    #       redirect_to tweets_path
+    #     else
+    #       render :index
+    #     end
+    # end
   end
 
   def destroy

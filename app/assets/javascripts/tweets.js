@@ -6,7 +6,7 @@ $('#new_tweet').on('submit', function(e) {
     url: $(this).attr('action'),
     method: $(this).attr('method'),
     data: $(this).serialize(),
-    dataType: 'html'
+    dataType: 'json'
   }).done(function(data) {
     $('.tweets').prepend(data);
   })
